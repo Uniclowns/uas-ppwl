@@ -12,7 +12,9 @@ class PropertiController extends Controller
      */
     public function index()
     {
-        //
+        return view('properti.index', [
+            'propertis' => Properti::latest('id')->paginate(10),
+        ]);
     }
 
     /**
@@ -20,7 +22,7 @@ class PropertiController extends Controller
      */
     public function create()
     {
-        //
+        return view('properti.create');
     }
 
     /**
@@ -28,7 +30,24 @@ class PropertiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'alamat' => 'required',
+            'tipe' => 'required',
+            'jumlah_kamar' => 'required|max:2',
+            'kamar_mandi' => 'required|max:2',
+            'fasilitas' => 'required',
+            'harga' => 'required|min:500000000',
+            'status' => 'required',
+            'tanggal_listing' => 'required',
+        ]);
+
+        $arrayToStr = implode(',', $validated['fasilitas']);
+        $validated['fasilitas'] = $arrayToStr;
+
+        $validated['agenId'] = auth()->id();
+
+        Properti::create($validated);
+        return redirect()->route('propertis.index')->withSuccess('Properti berhasil ditambahkan.');
     }
 
     /**
@@ -60,6 +79,7 @@ class PropertiController extends Controller
      */
     public function destroy(Properti $properti)
     {
-        //
+        Properti::destroy($properti->id);
+        return redirect()->route('propertis.index')->withSuccess('Properti berhasil dihapus.');
     }
 }

@@ -18,10 +18,10 @@ class PropertiFactory extends Factory
     {
         return [
             'alamat' => fake()->unique()->address(),
-            'tipe' => fake()->randomElement(['rumah tunggal', 'apartemen', 'kondominium']),
+            'tipe' => fake()->randomElement(['Rumah Tunggal', 'Apartemen', 'Kondominium']),
             'jumlah_kamar' => fake()->numberBetween(1, 5),
             'kamar_mandi' => fake()->numberBetween(1, 5),
-            'fasilitas' => fake()->randomElement(['kolam renang', 'garasi', 'taman']),
+            'fasilitas' => fake()->randomElement(['Kolam Renang', 'Garasi', 'Taman']),
             'harga' => fake()->numberBetween(1000000, 1000000000000),
             'status' => fake()->randomElement(['Dijual', 'Disewa', 'Sudah Terjual ', 'Sudah Tersewa']),
             'tanggal_listing' => now(),
