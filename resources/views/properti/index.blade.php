@@ -39,7 +39,7 @@
                             <td>Rp{{ number_format($properti->harga, 0) }}</td>
                             <td>{{ $properti->status }}</td>
                             <td>{{ date('d-m-Y', strtotime($properti->tanggal_listing)) }}</td>
-                            <td>{{ $properti->agens->nama }}</td>
+                            <td>{{ $properti->agens->name }}</td>
                             <td>
                                 <form action="{{ route('propertis.destroy', $properti->id) }}" method="post">
                                     @csrf

@@ -21,6 +21,7 @@ class RoleSeeder extends Seeder
             'show-properti',
             'edit-properti',
             'delete-properti',
+            'edit-agen',
         ]);
     }
 }

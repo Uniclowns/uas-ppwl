@@ -36,7 +36,7 @@ class PropertiController extends Controller
             'jumlah_kamar' => 'required|max:2',
             'kamar_mandi' => 'required|max:2',
             'fasilitas' => 'required',
-            'harga' => 'required|min:500000000',
+            'harga' => 'required',
             'status' => 'required',
             'tanggal_listing' => 'required',
         ]);
@@ -55,7 +55,9 @@ class PropertiController extends Controller
      */
     public function show(Properti $properti)
     {
-        //
+        return view('properti.show', [
+            'properti' => $properti,
+        ]);
     }
 
     /**
@@ -63,7 +65,10 @@ class PropertiController extends Controller
      */
     public function edit(Properti $properti)
     {
-        //
+        return view ('properti.edit', [
+            'properti' => $properti,
+            'fasilitas' => explode(',', $properti->fasilitas),
+        ]);
     }
 
     /**
@@ -71,7 +76,24 @@ class PropertiController extends Controller
      */
     public function update(Request $request, Properti $properti)
     {
-        //
+        $validated = $request->validate([
+            'alamat' => 'required',
+            'tipe' => 'required',
+            'jumlah_kamar' => 'required|max:2',
+            'kamar_mandi' => 'required|max:2',
+            'fasilitas' => 'required',
+            'harga' => 'required',
+            'status' => 'required',
+            'tanggal_listing' => 'required',
+        ]);
+
+        $arrayToStr = implode(',', $validated['fasilitas']);
+        $validated['fasilitas'] = $arrayToStr;
+
+        $validated['agenId'] = auth()->id();
+
+        Properti::where('id', $properti->id)->update($validated);
+        return redirect()->route('propertis.index')->withSuccess('Properti berhasil diperbarui.');
     }
 
     /**

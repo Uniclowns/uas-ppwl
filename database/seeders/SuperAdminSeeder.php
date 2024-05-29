@@ -21,11 +21,11 @@ class SuperAdminSeeder extends Seeder
         ]);
         $admin->assignRole('admin');
 
-        $agen = User::create([
-            'name' => 'Agen',
-            'email' => 'agen@gmail.com',
-            'password' => Hash::make('12345'),
-        ]);
-        $agen->assignRole('agen');        
+        // $agen = User::create([
+        //     'name' => 'Agen',
+        //     'email' => 'agen@gmail.com',
+        //     'password' => Hash::make('12345'),
+        // ]);
+        // $agen->assignRole('agen');        
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agen;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AgenController extends Controller
@@ -12,7 +13,8 @@ class AgenController extends Controller
      */
     public function index()
     {
-        //
+        $agens = Agen::latest('id')->paginate(5);
+        return view('agens.index', compact('agens'));
     }
 
     /**
@@ -20,7 +22,7 @@ class AgenController extends Controller
      */
     public function create()
     {
-        //
+        return view('agens.create');
     }
 
     /**
@@ -28,7 +30,19 @@ class AgenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        Agen::create($validated);
+        $user = User::create($validated);
+
+        $user->assignRole('agen');
+
+        return redirect()->route('agens.index')
+            ->with('success', 'Agen created successfully.');
     }
 
     /**
@@ -36,7 +50,7 @@ class AgenController extends Controller
      */
     public function show(Agen $agen)
     {
-        //
+        return view('agens.show', compact('agen'));
     }
 
     /**
@@ -44,15 +58,28 @@ class AgenController extends Controller
      */
     public function edit(Agen $agen)
     {
-        //
+        return view('agens.edit', compact('agen'));
     }
 
     /**
      * Update the specified resource in storage.
      */
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, Agen $agen)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = User::where('name', $agen->name)->update($validated);
+        Agen::where('id', $agen->id)->update($validated);
+
+        return redirect()->route('agens.index')
+            ->with('success', 'Agen updated successfully');
     }
 
     /**
@@ -60,6 +87,13 @@ class AgenController extends Controller
      */
     public function destroy(Agen $agen)
     {
-        //
+        $user = User::where('name', $agen->name)->first();
+        if ($user) {
+            $user->delete();
+        }
+        $agen->delete();
+        return redirect()->route('agens.index')
+            ->with('success', 'Agen deleted successfully');
     }
 }
+
