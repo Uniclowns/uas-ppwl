@@ -20,12 +20,5 @@ class SuperAdminSeeder extends Seeder
             'password' => Hash::make('12345'),
         ]);
         $admin->assignRole('admin');
-
-        // $agen = User::create([
-        //     'name' => 'Agen',
-        //     'email' => 'agen@gmail.com',
-        //     'password' => Hash::make('12345'),
-        // ]);
-        // $agen->assignRole('agen');        
     }
 }

@@ -63,7 +63,7 @@
                             </td>
                         </tr>
                     @empty
-                        <td colspan="4">
+                        <td colspan="12">
                             <span class="text-danger">
                                 <strong>No properti Found!</strong>
                             </span>
