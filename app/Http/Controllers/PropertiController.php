@@ -44,7 +44,7 @@ class PropertiController extends Controller
         $arrayToStr = implode(',', $validated['fasilitas']);
         $validated['fasilitas'] = $arrayToStr;
 
-        $validated['agenId'] = auth()->id();
+        $validated['agenId'] = (auth()->id()) - 1;
 
         Properti::create($validated);
         return redirect()->route('propertis.index')->withSuccess('Properti berhasil ditambahkan.');
@@ -65,7 +65,7 @@ class PropertiController extends Controller
      */
     public function edit(Properti $properti)
     {
-        return view ('properti.edit', [
+        return view('properti.edit', [
             'properti' => $properti,
             'fasilitas' => explode(',', $properti->fasilitas),
         ]);
@@ -90,7 +90,7 @@ class PropertiController extends Controller
         $arrayToStr = implode(',', $validated['fasilitas']);
         $validated['fasilitas'] = $arrayToStr;
 
-        $validated['agenId'] = auth()->id();
+        $validated['agenId'] = (auth()->id()) - 1;
 
         Properti::where('id', $properti->id)->update($validated);
         return redirect()->route('propertis.index')->withSuccess('Properti berhasil diperbarui.');

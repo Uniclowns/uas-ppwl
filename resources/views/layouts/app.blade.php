@@ -47,10 +47,10 @@
                             @endif
                         @else
                             @canany(['create-properti', 'edit-properti', 'delete-properti'])
-                                <li><a class="nav-link" href="#">Manage Properti</a></li>
+                                <li><a class="nav-link" href="{{ route('propertis.index') }}">Manage Properti</a></li>
                             @endcanany
                             @canany(['create-agen', 'edit-agen', 'delete-agen'])
-                                <li><a class="nav-link" href="">Manage Agen</a></li>
+                                <li><a class="nav-link" href="{{ route('agens.index') }}">Manage Agen</a></li>
                             @endcanany
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
